@@ -27,12 +27,14 @@
                   class="quiz__input_radio"
                   type="radio"
                   :name="task.id"
-                  :id="option"
+                  :id="task.id + `_` + option"
                   :value="option"
                 />
-                <label class="quiz__radiobuttons-label" :for="option">{{
-                  option
-                }}</label>
+                <label
+                  class="quiz__radiobuttons-label"
+                  :for="task.id + `_` + option"
+                  >{{ option }}</label
+                >
               </div>
             </div>
 
