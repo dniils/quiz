@@ -7,20 +7,20 @@
 <script setup></script>
 
 <style lang="scss" scoped>
+@import "@/assets/style/_variables";
 .main-button {
+  color: var(--white);
+  font-size: var(--fs-m);
+  background-color: var(--blue-200);
   border: none;
-  // width: 100%;
   padding: 10px;
-  background-color: #4f5bff;
-  color: #fff;
-  border-radius: 5px;
+  border-radius: 50px;
   transition: all 0.15s ease-out;
-  font-size: 16px;
   margin: 20px 0;
 
   &:hover {
     cursor: pointer;
-    background-color: #3840b8;
+    background-color: var(--blue-300);
   }
 }
 </style>

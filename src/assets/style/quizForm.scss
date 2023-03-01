@@ -1,0 +1,99 @@
+@import "variables";
+
+.quiz {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+  &__task {
+    margin-bottom: 40px;
+    background-color: var(--blue-100);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: relative;
+  }
+
+  &__image {
+    height: 200px;
+    min-width: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-left: 40px;
+    align-self: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__question-number {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background-color: var(--blue-200);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    font-weight: bold;
+  }
+
+  &__question {
+    font-weight: bold;
+    font-size: var(--fs-l);
+    margin-bottom: 10px;
+  }
+
+  &__hint {
+    font-size: var(--fs-m);
+    color: var(--blue-200);
+    margin-bottom: 10px;
+  }
+
+  &__options {
+    // background-color: var(--blue-200);
+    margin-bottom: 10px;
+  }
+
+  &__input_text {
+    border: none;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: var(--fs-m);
+    width: 100%;
+  }
+
+  &__input_radio {
+    margin: 10px;
+    transform: scale(1.2);
+  }
+
+  &__input_checkbox {
+    margin: 10px;
+    transform: scale(1.2);
+  }
+
+  &__radiobuttons-label {
+    font-size: var(--fs-m);
+    color: var(--gray-200);
+  }
+
+  &__checkbox-label {
+    font-size: var(--fs-m);
+    color: var(--gray-200);
+  }
+
+  .main-button {
+    margin-top: 0;
+    // width: 200px;
+    // align-self: center;
+  }
+}
