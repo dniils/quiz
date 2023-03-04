@@ -11,6 +11,7 @@
   {
     "id": 1,
     "question": "What dishes are Georgian trad dishes?🍇",
+    "inputHint": "you must choose all the right options to get points for this task",
     "options": [
       "Khachapuri",
       "Lobio",
@@ -76,6 +77,23 @@
     "image": "https://scontent.ftbs3-2.fna.fbcdn.net/v/t1.6435-9/52392569_2247700055486472_8122362844176973824_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=730e14&_nc_ohc=jkleubGZm6MAX8XwU7E&_nc_ht=scontent.ftbs3-2.fna&oh=00_AfCo44GXoX-y0-cD1XO3_4OjGDMY-vuS0FfKGmSlmji3Cw&oe=642461F0",
     "type": "text",
     "correct": "Sakartvelo",
+    "weight": 3
+  },
+
+  {
+    "id": 6,
+    "question": "What parks are located in Tbilisi?",
+    "image": "https://georgianjournal.ge/media/images/georgianews/2018/August/discover_georgia/mziuri_park_1tv.ge.jpg",
+    "type": "checkbox",
+    "options": [
+      "Vake Park",
+      "Mtatsminda Park",
+      "Mziuri Park",
+      "Miracle Park",
+      "Youth Park",
+      "Park of Culture and Rest"
+    ],
+    "correct": ["Vake Park", "Mtatsminda Park", "Mziuri Park"],
     "weight": 3
   }
 ]

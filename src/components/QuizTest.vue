@@ -1,5 +1,5 @@
 <template>
-  <div class="quiz-component">
+  <div class="quiz-test">
     <form class="quiz" @submit.prevent="submitEventHandler">
       <div
         class="quiz__task"
@@ -25,7 +25,7 @@
             >
               <div
                 class="quiz__radiobuttons-options-wrapper"
-                v-for="option in task.options"
+                v-for="option in mixArrayElements(task.options)"
                 :key="option"
               >
                 <input
@@ -48,7 +48,7 @@
             <div class="quiz__checkbox-wrapper" v-if="task.type === 'checkbox'">
               <div
                 class="quiz__checkbox-option"
-                v-for="option in task.options"
+                v-for="option in mixArrayElements(task.options)"
                 :key="option"
               >
                 <input
@@ -69,9 +69,9 @@
 
         <img class="quiz__image" v-if="task.image" :src="task.image" alt="" />
         <div class="quiz__question-number">
-          <!-- Make some el counter not dependent on questions id's (questions order will be randomized) -->
           <div>{{ questionNumber + 1 }}</div>
         </div>
+        <span class="quiz__question-weight"> weight: {{ task.weight }} </span>
       </div>
       <main-button>✨ Submit ✨</main-button>
     </form>
@@ -79,11 +79,9 @@
 </template>
 
 <script setup lang="ts">
-/* eslint-disable */
-
 // todos:
 // [x] make a function that randomizes elements order in Array
-// [ ] randomize answer options order ()
+// [x] randomize answer options order ()
 // [ ] make it ☝️ optional
 
 // [ ] edit data first (arrays' elements order), then display it
@@ -92,16 +90,29 @@
 // [ ] make it ☝️ optional
 
 // [x] get selected answers and compare them with correct ones
-// [ ] get questions id's with incorrect answer
-// [ ] calculate points according to the questions weight
+// [x] get questions id's with incorrect answer
+// [x] calculate points according to the questions weight
 
-import { ref } from "vue";
+// [ ] add regExp check for text inputs
+// [ ] add store
+
+import { ref, defineEmits } from "vue";
 import questionsData from "@/questions.json";
 import MainButton from "@/components/MainButton.vue";
 
-const quizData = mixArrayElements(questionsData); //create TS Type to check data structure and types (?)
+const quizData = ref(mixArrayElements(questionsData));
 const answers = ref({});
-let checkboxAnswers = ref([]);
+let total = ref(0);
+let result = ref(0);
+
+const emit = defineEmits("submit-form");
+
+function getTotalScore() {
+  total.value = 0;
+  for (let taskId = 0; taskId < Object.keys(answers.value).length; taskId++) {
+    total.value = total.value + answers.value[taskId].weight;
+  }
+}
 
 function mixArrayElements<T>(arr: T[]): T[] {
   return arr.sort((a, b) => 0.5 - Math.random());
@@ -110,67 +121,80 @@ function mixArrayElements<T>(arr: T[]): T[] {
 // Get all the selected/written answers into the 'answers' object by task id
 function getSelectedOption(taskId, e) {
   if (e.target.type === "radio") {
-    answers.value[taskId] = e.target._value;
+    answers.value[taskId]["answer"] = e.target._value;
   }
 
   if (e.target.type === "checkbox") {
-    if (e.target.checked) checkboxAnswers.value.push(e.target.value);
-    if (!e.target.checked) {
-      checkboxAnswers.value = checkboxAnswers.value.filter(
-        (el) => el !== e.target.value
-      );
-    }
+    // answers.value[taskId]["answer"] = []; // fix checkboxes
 
-    checkboxAnswers.value.filter((el) => el !== e.target.checked);
-    answers.value[taskId] = checkboxAnswers.value;
+    e.target.checked
+      ? answers.value[taskId]["answer"].push(e.target.value)
+      : (answers.value[taskId]["answer"] = answers.value[taskId][
+          "answer"
+        ].filter((el) => el !== e.target.value));
   }
 
   if (e.target.type === "text") {
-    answers.value[taskId] = e.target.value;
+    answers.value[taskId]["answer"] = e.target.value;
   }
 }
 
 // get questions ids & corresponding correct answers from data
-function getCorrectAnswers() {
-  let correctAnswersWithIds = {};
-  quizData.map((task) => {
-    correctAnswersWithIds[task.id] = task.correct;
+(function getCorrectAnswers() {
+  quizData.value.map((task) => {
+    answers.value[task.id] = {
+      answer: [],
+      correct: task.correct,
+      weight: task.weight,
+    };
   });
-
-  return correctAnswersWithIds;
-}
-getCorrectAnswers();
+})();
 
 function compareTwoArrays(a: Array<string>, b: Array<string>) {
   return a.length === b.length && a.sort().every((el, i) => el === b.sort()[i]);
 }
 
-// compare correct answers with the given ones (answers.value ~ getCorrectAnswers())
-function compareAnswers(given, correct) {
-  let results = [];
-  for (let id = 0; id < Object.keys(given).length; id++) {
-    if (typeof Object.entries(given)[id][1] === "string") {
-      results.push(
-        given[Object.keys(given)[id]].toLowerCase() ===
-          correct[Object.keys(correct)[id]].toLowerCase()
+// compare correct answers with the given ones by answer type
+function compareAnswers() {
+  result.value = 0;
+
+  for (let id = 0; id < Object.keys(answers.value).length; id++) {
+    if (typeof answers.value[id].answer === "string") {
+      answers.value[id]["result"] =
+        answers.value[id].answer.toLowerCase().trim() ===
+        answers.value[id].correct.toLowerCase().trim();
+    } else if (Array.isArray(answers.value[id].answer)) {
+      answers.value[id]["result"] = compareTwoArrays(
+        answers.value[id].answer,
+        answers.value[id].correct
       );
-    } else if (typeof Object.entries(given)[id][1] === "object") {
-      const givenAnswersArray = given[Object.keys(given)[id]];
-      const correctAnswersArray = correct[Object.keys(correct)[id]];
-      results.push(compareTwoArrays(givenAnswersArray, correctAnswersArray));
+    }
+
+    if (answers.value[id].result) {
+      result.value += answers.value[id].weight;
     }
   }
+}
 
-  console.log("All correct? ", !results.some((el) => el === false));
+function checkIfAllTasksDone() {
+  let arr = [];
+  for (let id = 0; id < Object.keys(answers.value).length; id++) {
+    arr.push(answers.value[id].answer);
+  }
+  return !arr.some((el) => el.length === 0);
 }
 
 function submitEventHandler() {
-  compareAnswers(answers.value, getCorrectAnswers());
+  getTotalScore();
+  if (checkIfAllTasksDone()) {
+    compareAnswers();
+    emit("submit-form", { result: result.value, total: total.value });
+  } else console.log("Please, provide answers to all the questions");
 }
 </script>
 
 <style scoped lang="scss">
-.quiz-component {
+.quiz-test {
   width: 600px;
   margin: 0 auto;
 }

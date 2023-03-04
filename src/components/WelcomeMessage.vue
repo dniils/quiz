@@ -1,17 +1,15 @@
 <template>
   <div class="welcome-message">
     Hi, I am QuizApp built to test your knowledge! ✨
-    <main-button @click="$emit('show-test')"> Ok, let's go 🔥</main-button>
+    <main-button @click="emit('show-test')"> Ok, let's go 🔥</main-button>
   </div>
 </template>
 
 <script setup lang="ts">
-/* eslint-disable */
-import { ref, defineEmits } from "vue";
+import { defineEmits } from "vue";
 import MainButton from "@/components/MainButton.vue";
 
-// const emit = defineEmits("someEvent");
-// let testDisplayed = ref(false);
+const emit = defineEmits("show-test");
 </script>
 
 <style scoped>
