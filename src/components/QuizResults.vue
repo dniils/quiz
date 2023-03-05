@@ -10,7 +10,7 @@
     </div>
     <div class="quiz-results__result">
       You have scored
-      <span class="quiz-results__score">{{ result.result }}</span>
+      <span class="quiz-results__score">{{ props.result.score }}</span>
       out of
       <span class="quiz-results__total">
         {{ props.result.total }}
@@ -36,10 +36,10 @@ let scoreReaction = ref({
 });
 
 (function pushScoreReaction() {
-  const percent = (props.result.result / props.result.total) * 100;
+  const percent = (props.result.score / props.result.total) * 100;
   if (percent >= 0 && percent <= 40) scoreReaction.value.sad = true;
-  if (percent > 40 && percent <= 60) scoreReaction.value.ok = true;
-  if (percent > 60 && percent <= 80) scoreReaction.value.neutral = true;
+  if (percent > 40 && percent <= 60) scoreReaction.value.neutral = true;
+  if (percent > 60 && percent <= 80) scoreReaction.value.ok = true;
   if (percent > 80 && percent <= 100) scoreReaction.value.happy = true;
 })();
 
@@ -50,13 +50,15 @@ const props = defineProps({
 
 <style lang="scss">
 .quiz-results {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: var(--fs-l);
 
   &__emoji {
-    font-size: var(--fs-xxl);
+    font-size: var(--fs-xxxl);
     margin-bottom: 20px;
   }
 

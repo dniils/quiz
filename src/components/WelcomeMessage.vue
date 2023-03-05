@@ -14,10 +14,11 @@ const emit = defineEmits("show-test");
 
 <style scoped>
 .welcome-message {
-  margin-bottom: 50px;
   font-size: var(--fs-l);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 </style>

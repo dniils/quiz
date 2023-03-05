@@ -1,99 +1,104 @@
-[
-  {
-    "id": 0,
-    "question": "What is the second largest city by population in Georgia?",
-    "options": ["Tbilisi", "Batumi", "Kutaisi", "Rustavi", "Gori"],
-    "image": "https://images.squarespace-cdn.com/content/v1/58cf00b21b631bf52d2edc0e/1499690850682-MC0OF544TPP7AZCPE3W9/tbilisi-skyline.jpg",
-    "type": "radiobutton",
-    "correct": "Batumi",
-    "weight": 2
-  },
-  {
-    "id": 1,
-    "question": "What dishes are Georgian trad dishes?🍇",
-    "inputHint": "you must choose all the right options to get points for this task",
-    "options": [
-      "Khachapuri",
-      "Lobio",
-      "Khinkali",
-      "Pkhali",
-      "Satsivi",
-      "Churchkhela",
-      "Borsch",
-      "Baklava",
-      "Kebab",
-      "Dolma",
-      "Kyufta"
-    ],
-    "image": "https://images.squarespace-cdn.com/content/v1/556738c2e4b0ab3593aa1f30/1510700214673-TU57UV7D02SYTOWT5YLA/A+plate+of+khinkali",
-    "type": "checkbox",
-    "correct": [
-      "Khachapuri",
-      "Khinkali",
-      "Lobio",
-      "Pkhali",
-      "Satsivi",
-      "Churchkhela"
-    ],
-    "weight": 1
-  },
-  {
-    "id": 2,
-    "question": "How do you say 'thank you very much' in Georgian?",
-    "inputHint": "use transliteration, don't worry about the letter case",
-    "type": "text",
-    "correct": "didi madloba",
-    "weight": 3
-  },
-  {
-    "id": 3,
-    "question": "You accidentally bumped into someone on the street. It would be nice to apologize. How to do it in Georgian using one word?",
-    "inputHint": "use transliteration, don't worry about the letter case",
-    "type": "text",
-    "correct": "bodishi",
-    "weight": 3
-  },
-  {
-    "id": 4,
-    "question": "In which town of Georgia Stalin was born?",
-    "options": [
-      "Tbilisi",
-      "Rustavi",
-      "Gori",
-      "Telavi",
-      "Poti",
-      "Sighnaghi",
-      "Kutaisi"
-    ],
-    "image": "https://ichef.bbci.co.uk/images/ic/1200xn/p02mqthy.jpg",
-    "type": "radiobutton",
-    "correct": "Gori",
-    "weight": 3
-  },
-  {
-    "id": 5,
-    "question": "How do locals call Georgia?",
-    "inputHint": "use transliteration, don't worry about the letter case",
-    "image": "https://scontent.ftbs3-2.fna.fbcdn.net/v/t1.6435-9/52392569_2247700055486472_8122362844176973824_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=730e14&_nc_ohc=jkleubGZm6MAX8XwU7E&_nc_ht=scontent.ftbs3-2.fna&oh=00_AfCo44GXoX-y0-cD1XO3_4OjGDMY-vuS0FfKGmSlmji3Cw&oe=642461F0",
-    "type": "text",
-    "correct": "Sakartvelo",
-    "weight": 3
-  },
+{
+  "quizName": "Georgia",
+  "mixQuestions": true,
+  "mixAnswerOptions": true,
+  "data": [
+    {
+      "id": 0,
+      "question": "What is the second largest city by population in Georgia?",
+      "options": ["Tbilisi", "Batumi", "Kutaisi", "Rustavi", "Gori"],
+      "image": "https://images.squarespace-cdn.com/content/v1/58cf00b21b631bf52d2edc0e/1499690850682-MC0OF544TPP7AZCPE3W9/tbilisi-skyline.jpg",
+      "type": "radiobutton",
+      "correct": "Batumi",
+      "weight": 2
+    },
+    {
+      "id": 1,
+      "question": "What dishes are Georgian trad dishes?🍇",
+      "inputHint": "you must choose all the right options to get points for this task",
+      "options": [
+        "Khachapuri",
+        "Lobio",
+        "Khinkali",
+        "Pkhali",
+        "Satsivi",
+        "Churchkhela",
+        "Borsch",
+        "Baklava",
+        "Kebab",
+        "Dolma",
+        "Kyufta"
+      ],
+      "image": "https://images.squarespace-cdn.com/content/v1/556738c2e4b0ab3593aa1f30/1510700214673-TU57UV7D02SYTOWT5YLA/A+plate+of+khinkali",
+      "type": "checkbox",
+      "correct": [
+        "Khachapuri",
+        "Khinkali",
+        "Lobio",
+        "Pkhali",
+        "Satsivi",
+        "Churchkhela"
+      ],
+      "weight": 1
+    },
+    {
+      "id": 2,
+      "question": "How do you say 'thank you very much' in Georgian?",
+      "inputHint": "use transliteration, don't worry about the letter case",
+      "type": "text",
+      "correct": "didi madloba",
+      "weight": 3
+    },
+    {
+      "id": 3,
+      "question": "You accidentally bumped into someone on the street. It would be nice to apologize. How to do it in Georgian using one word?",
+      "inputHint": "use transliteration, don't worry about the letter case",
+      "type": "text",
+      "correct": "bodishi",
+      "weight": 3
+    },
+    {
+      "id": 4,
+      "question": "In which town of Georgia Stalin was born?",
+      "options": [
+        "Tbilisi",
+        "Rustavi",
+        "Gori",
+        "Telavi",
+        "Poti",
+        "Sighnaghi",
+        "Kutaisi"
+      ],
+      "image": "https://ichef.bbci.co.uk/images/ic/1200xn/p02mqthy.jpg",
+      "type": "radiobutton",
+      "correct": "Gori",
+      "weight": 3
+    },
+    {
+      "id": 5,
+      "question": "How do locals call Georgia?",
+      "inputHint": "use transliteration, don't worry about the letter case",
+      "image": "https://scontent.ftbs3-2.fna.fbcdn.net/v/t1.6435-9/52392569_2247700055486472_8122362844176973824_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=730e14&_nc_ohc=jkleubGZm6MAX8XwU7E&_nc_ht=scontent.ftbs3-2.fna&oh=00_AfCo44GXoX-y0-cD1XO3_4OjGDMY-vuS0FfKGmSlmji3Cw&oe=642461F0",
+      "type": "text",
+      "correct": "Sakartvelo",
+      "weight": 3
+    },
 
-  {
-    "id": 6,
-    "question": "What parks are located in Tbilisi?",
-    "image": "https://georgianjournal.ge/media/images/georgianews/2018/August/discover_georgia/mziuri_park_1tv.ge.jpg",
-    "type": "checkbox",
-    "options": [
-      "Vake Park",
-      "Mtatsminda Park",
-      "Mziuri Park",
-      "Miracle Park",
-      "Youth Park",
-      "Park of Culture and Rest"
-    ],
-    "correct": ["Vake Park", "Mtatsminda Park", "Mziuri Park"],
-    "weight": 3
-  }
-]
+    {
+      "id": 6,
+      "question": "What parks are located in Tbilisi?",
+      "image": "https://georgianjournal.ge/media/images/georgianews/2018/August/discover_georgia/mziuri_park_1tv.ge.jpg",
+      "type": "checkbox",
+      "options": [
+        "Vake Park",
+        "Mtatsminda Park",
+        "Mziuri Park",
+        "Miracle Park",
+        "Youth Park",
+        "Park of Culture and Rest"
+      ],
+      "correct": ["Vake Park", "Mtatsminda Park", "Mziuri Park"],
+      "weight": 3
+    }
+  ]
+}

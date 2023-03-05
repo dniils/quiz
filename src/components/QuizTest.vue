@@ -1,9 +1,10 @@
 <template>
   <div class="quiz-test">
     <form class="quiz" @submit.prevent="submitEventHandler">
+      <h1 class="quiz__header">{{ "📝" + quizData.quizName }}</h1>
       <div
         class="quiz__task"
-        v-for="(task, questionNumber) in quizData"
+        v-for="(task, questionNumber) in mixQuestionsOrder(quizData.data)"
         v-bind:key="task.id"
       >
         <div class="quiz__content">
@@ -25,7 +26,7 @@
             >
               <div
                 class="quiz__radiobuttons-options-wrapper"
-                v-for="option in mixArrayElements(task.options)"
+                v-for="option in mixAnswersOrder(task.options)"
                 :key="option"
               >
                 <input
@@ -48,7 +49,7 @@
             <div class="quiz__checkbox-wrapper" v-if="task.type === 'checkbox'">
               <div
                 class="quiz__checkbox-option"
-                v-for="option in mixArrayElements(task.options)"
+                v-for="option in mixAnswersOrder(task.options)"
                 :key="option"
               >
                 <input
@@ -81,13 +82,11 @@
 <script setup lang="ts">
 // todos:
 // [x] make a function that randomizes elements order in Array
-// [x] randomize answer options order ()
-// [ ] make it ☝️ optional
-
-// [ ] edit data first (arrays' elements order), then display it
+// [x] randomize answer options order
+// [x] make it optional
 
 // [x] randomize questions order
-// [ ] make it ☝️ optional
+// [x] make it optional
 
 // [x] get selected answers and compare them with correct ones
 // [x] get questions id's with incorrect answer
@@ -95,27 +94,61 @@
 
 // [ ] add regExp check for text inputs
 // [ ] add store
+// if user refreshed the page by accident, would be nice to have his answers saved
+
+// [ ] add popup/alert on submit, ask user if he would like to submit unfinished test (not all answers provided case)
+// [ ] show right/wrong answers
+// [ ] allow question ids to be nonconsecutive numbers
 
 import { ref, defineEmits } from "vue";
 import questionsData from "@/questions.json";
 import MainButton from "@/components/MainButton.vue";
 
-const quizData = ref(mixArrayElements(questionsData));
+const quizData = ref(questionsData);
 const answers = ref({});
-let total = ref(0);
-let result = ref(0);
+let result = ref({
+  score: 0,
+  total: 0,
+});
 
 const emit = defineEmits("submit-form");
 
+// get questions ids & corresponding correct answers from data
+quizData.value["data"].map((task) => {
+  if (task.type === "checkbox") {
+    answers.value[task.id] = {
+      answer: [],
+      correct: task.correct,
+      weight: task.weight,
+    };
+  } else {
+    answers.value[task.id] = {
+      answer: undefined,
+      correct: task.correct,
+      weight: task.weight,
+    };
+  }
+});
+
 function getTotalScore() {
-  total.value = 0;
+  result.value.total = 0;
   for (let taskId = 0; taskId < Object.keys(answers.value).length; taskId++) {
-    total.value = total.value + answers.value[taskId].weight;
+    result.value.total += answers.value[taskId].weight;
   }
 }
 
 function mixArrayElements<T>(arr: T[]): T[] {
-  return arr.sort((a, b) => 0.5 - Math.random());
+  return arr.sort(() => 0.5 - Math.random());
+}
+
+function mixQuestionsOrder<T>(arr: T[]): T[] {
+  if (quizData.value.mixQuestions == true) return mixArrayElements(arr);
+  else return arr;
+}
+
+function mixAnswersOrder<T>(arr: T[]): T[] {
+  if (quizData.value.mixAnswerOptions == true) return mixArrayElements(arr);
+  else return arr;
 }
 
 // Get all the selected/written answers into the 'answers' object by task id
@@ -125,8 +158,6 @@ function getSelectedOption(taskId, e) {
   }
 
   if (e.target.type === "checkbox") {
-    // answers.value[taskId]["answer"] = []; // fix checkboxes
-
     e.target.checked
       ? answers.value[taskId]["answer"].push(e.target.value)
       : (answers.value[taskId]["answer"] = answers.value[taskId][
@@ -139,24 +170,13 @@ function getSelectedOption(taskId, e) {
   }
 }
 
-// get questions ids & corresponding correct answers from data
-(function getCorrectAnswers() {
-  quizData.value.map((task) => {
-    answers.value[task.id] = {
-      answer: [],
-      correct: task.correct,
-      weight: task.weight,
-    };
-  });
-})();
-
 function compareTwoArrays(a: Array<string>, b: Array<string>) {
   return a.length === b.length && a.sort().every((el, i) => el === b.sort()[i]);
 }
 
 // compare correct answers with the given ones by answer type
 function compareAnswers() {
-  result.value = 0;
+  result.value.score = 0;
 
   for (let id = 0; id < Object.keys(answers.value).length; id++) {
     if (typeof answers.value[id].answer === "string") {
@@ -171,7 +191,7 @@ function compareAnswers() {
     }
 
     if (answers.value[id].result) {
-      result.value += answers.value[id].weight;
+      result.value.score += answers.value[id].weight;
     }
   }
 }
@@ -181,14 +201,14 @@ function checkIfAllTasksDone() {
   for (let id = 0; id < Object.keys(answers.value).length; id++) {
     arr.push(answers.value[id].answer);
   }
-  return !arr.some((el) => el.length === 0);
+  return !arr.some((el) => el?.length === 0 || typeof el === undefined);
 }
 
 function submitEventHandler() {
   getTotalScore();
   if (checkIfAllTasksDone()) {
     compareAnswers();
-    emit("submit-form", { result: result.value, total: total.value });
+    emit("submit-form", result.value);
   } else console.log("Please, provide answers to all the questions");
 }
 </script>
@@ -196,6 +216,6 @@ function submitEventHandler() {
 <style scoped lang="scss">
 .quiz-test {
   width: 600px;
-  margin: 0 auto;
+  margin: 40px auto;
 }
 </style>

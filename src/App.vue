@@ -20,7 +20,7 @@ import WelcomeMessage from "@/components/WelcomeMessage.vue";
 import QuizResults from "./components/QuizResults.vue";
 
 let testDisplayed = ref(false);
-let testResult = ref(null);
+let testResult = ref();
 
 const showTestEventHandler = () => (testDisplayed.value = !testDisplayed.value);
 const submitFormEventHandler = (result: object) => (testResult.value = result);
